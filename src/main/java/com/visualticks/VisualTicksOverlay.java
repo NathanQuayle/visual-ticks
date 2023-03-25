@@ -28,10 +28,8 @@ public class VisualTicksOverlay extends Overlay
     {
         Dimension preferredSize = getPreferredSize();
 
-        if (preferredSize == null)
-        {
-            preferredSize = new Dimension(config.numberOfTicks() * 32, 32);
-        }
+        if (preferredSize == null)  preferredSize = new Dimension(config.numberOfTicks() * 32, 32);
+
         int circleWidth = (preferredSize.width - config.tickPadding() * (config.numberOfTicks() - 1)) / config.numberOfTicks();
         int circleHeight = config.maintainAspectRatio() ? circleWidth : preferredSize.height;
 
