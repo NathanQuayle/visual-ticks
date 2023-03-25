@@ -41,4 +41,11 @@ public interface VisualTicksConfig extends Config
 			description = "The colour of the ticks"
 	)
 	default Color tickColour() { return new Color(41, 128, 185); }
+
+	@ConfigItem(
+			keyName = "paddingBetweenTicks",
+			name = "Padding between ticks",
+			description = "The amount of space between ticks"
+	)
+	default int tickPadding() { return 5; }
 }
