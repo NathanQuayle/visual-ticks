@@ -1,8 +1,6 @@
 package com.visualticks;
 
-import net.runelite.client.config.Config;
-import net.runelite.client.config.ConfigGroup;
-import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.*;
 
 import java.awt.*;
 
@@ -17,6 +15,7 @@ public interface VisualTicksConfig extends Config
             name = "Number of ticks",
             description = "Number of tick circles to display"
     )
+    @Range(min = 2, max = 30)
     default int numberOfTicks()
     {
         return 2;
@@ -28,6 +27,7 @@ public interface VisualTicksConfig extends Config
             name = "Tick colour",
             description = "The colour of the ticks"
     )
+    @Alpha
     default Color tickColour()
     {
         return new Color(41, 128, 185);
@@ -39,6 +39,7 @@ public interface VisualTicksConfig extends Config
             name = "Current tick colour",
             description = "The colour of the current tick"
     )
+    @Alpha
     default Color currentTickColour()
     {
         return new Color(236, 240, 241);
