@@ -59,8 +59,8 @@ public interface VisualTicksConfig extends Config
     @ConfigItem(
             position = 3,
             keyName = "sizeOfTickShapes",
-            name = "Size of tick shapes",
-            description = "How many pixels to make the ticks"
+            name = "Size of ticks",
+            description = "How many pixels to make the tick shapes"
     )
     default int sizeOfTickShapes()
     {
