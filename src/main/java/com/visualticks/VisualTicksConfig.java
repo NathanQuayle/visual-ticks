@@ -47,17 +47,28 @@ public interface VisualTicksConfig extends Config
 
 	@ConfigItem(
 			position = 3,
-			keyName = "maintainAspectRatio",
-			name = "Maintain aspect ratio",
-			description = "Ensures all circles are equal width and height"
+			keyName = "amountPerRow",
+			name = "Amount per row",
+			description = "How many ticks to display per row"
 	)
-	default boolean maintainAspectRatio()
+	default int amountPerRow()
 	{
-		return true;
+		return 8;
 	}
 
     @ConfigItem(
-            position = 4,
+            position = 3,
+            keyName = "sizeOfTickShapes",
+            name = "Size of tick shapes",
+            description = "How many pixels to make the ticks"
+    )
+    default int sizeOfTickShapes()
+    {
+        return 32;
+    }
+
+    @ConfigItem(
+            position = 5,
             keyName = "paddingBetweenTicks",
             name = "Padding between ticks",
             description = "The amount of space between ticks"

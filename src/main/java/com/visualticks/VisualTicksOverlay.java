@@ -20,26 +20,33 @@ public class VisualTicksOverlay extends Overlay
     public VisualTicksOverlay()
     {
         setPosition(OverlayPosition.ABOVE_CHATBOX_RIGHT);
-        setResizable(true);
     }
 
     @Override
     public Dimension render(Graphics2D graphics)
     {
-        Dimension preferredSize = getPreferredSize();
-
-        if (preferredSize == null)  preferredSize = new Dimension(config.numberOfTicks() * 32, 32);
-
-        int circleWidth = (preferredSize.width - config.tickPadding() * (config.numberOfTicks() - 1)) / config.numberOfTicks();
-        int circleHeight = config.maintainAspectRatio() ? circleWidth : preferredSize.height;
-
-        for (int tick = 0; tick < config.numberOfTicks(); tick++)
+        int row = 0;
+        for (int tick = 0, position = 0; tick < config.numberOfTicks(); tick++)
         {
+            int x = position * config.sizeOfTickShapes() + position * config.tickPadding();
+            int y = row * config.sizeOfTickShapes() + row * config.tickPadding();
             graphics.setColor(plugin.tick == tick ? config.currentTickColour() : config.tickColour());
 
-            graphics.fillOval(tick * circleWidth + tick * config.tickPadding(), 0, circleWidth, circleHeight);
+            graphics.fillOval(x, y, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+
+            position++;
+            if(position > config.amountPerRow() - 1) {
+                position = 0;
+                row++;
+            }
         }
 
-        return config.maintainAspectRatio() ? new Dimension(preferredSize.width, circleHeight) : preferredSize;
+        int rowsRendered = (int) Math.ceil((double) config.numberOfTicks() / (double) config.amountPerRow());
+        int height = (rowsRendered - 1) * config.tickPadding() + rowsRendered * config.sizeOfTickShapes();
+
+        int ticksRenderedPerRow = config.amountPerRow() > config.numberOfTicks() ? config.numberOfTicks() : config.amountPerRow();
+        int width = (ticksRenderedPerRow - 1) * config.tickPadding() + ticksRenderedPerRow * config.sizeOfTickShapes();
+
+        return new Dimension(width, height);
     }
 }
