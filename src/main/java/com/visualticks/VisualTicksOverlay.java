@@ -53,14 +53,14 @@ public class VisualTicksOverlay extends Overlay
 
     private void setTickShape(Graphics2D graphics, int xPosition, int yPosition) {
         switch (config.getTickShape()) {
-            case CIRCLE:
-                graphics.fillOval(xPosition, yPosition, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+            case SQUARE:
+                graphics.fillRect(xPosition, yPosition, config.sizeOfTickShapes(), config.sizeOfTickShapes());
                 break;
             case ROUNDED_SQUARE:
                 graphics.fillRoundRect(xPosition, yPosition ,config.sizeOfTickShapes() , config.sizeOfTickShapes(), config.getTickArc(), config.getTickArc());
                 break;
             default:
-                graphics.fillRect(xPosition, yPosition, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+                graphics.fillOval(xPosition, yPosition, config.sizeOfTickShapes(), config.sizeOfTickShapes());
                 break;
         }
     }
@@ -68,7 +68,7 @@ public class VisualTicksOverlay extends Overlay
     private void setTickColor(Graphics2D graphics, int tick) {
         if (plugin.tick == tick) {
             graphics.setColor(setCurrentColor(tick));
-        } else if (config.isResetCounter() && isPrayerOnTick(tick)) {
+        } else if (config.isResetCounter() && isResetTick(tick)) {
             graphics.setColor(config.getResetTickColour());
         } else {
             graphics.setColor(config.tickColour());
@@ -79,14 +79,14 @@ public class VisualTicksOverlay extends Overlay
         if (!config.isResetCounter()) {
             return config.currentTickColour();
         }
-        if (isPrayerOnTick(tick)) {
+        if (isResetTick(tick)) {
             return config.getCurrentResetTickColour();
         } else {
             return config.currentTickColour();
         }
     }
 
-    private boolean isPrayerOnTick(int tick) {
+    private boolean isResetTick(int tick) {
         return (tick == ResetUtils.calculateOffset(config.getOffset(), config.numberOfTicks()));
     }
 }
