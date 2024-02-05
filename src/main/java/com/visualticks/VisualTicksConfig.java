@@ -1,6 +1,7 @@
 package com.visualticks;
 
 import com.visualticks.config.TickShape;
+import net.runelite.api.Skill;
 import net.runelite.client.config.*;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ public interface VisualTicksConfig extends Config
 {
     String GROUP_NAME = "visualticks";
     String GENERAL_SETTINGS = "General-settings";
-    String ALTERNATIVE_SETTINGS = "Alternative-settings";
+    String RESET_SETTINGS = "Reset-settings";
 
     // General settings
     @ConfigSection(
@@ -118,5 +119,75 @@ public interface VisualTicksConfig extends Config
     default TickShape getTickShape()
     {
         return TickShape.CIRCLE;
+    }
+
+    @ConfigSection(
+            position = 1,
+            name = "Reset counter",
+            description = "Reset counter"
+
+    )
+    String resetSettings = RESET_SETTINGS;
+
+
+    @ConfigItem(
+            position = 0,
+            keyName = "reset-conter",
+            name = "Reset counter on xp drop",
+            description = "Reset the tick-counter after xp-drop.",
+            section = resetSettings
+    )
+    default boolean isResetCounter() {
+        return false;
+    }
+
+    @ConfigItem(
+            position = 1,
+            keyName = "offset",
+            name = "Offset",
+            description = "Which tick to start on after the reset.",
+            section = resetSettings
+    )
+    @Range(min = 0, max = 30)
+    default int getOffset() {
+        return 0;
+    }
+
+
+    @ConfigItem(
+            position = 2,
+            keyName = "skill",
+            name = "Skill",
+            description = "Which skill you want to trigger the reset",
+            section = resetSettings
+    )
+    default Skill getResetSkill() {
+        return Skill.HITPOINTS;
+    }
+
+    @ConfigItem(
+            position = 3,
+            keyName = "currentResetTickColour",
+            name = "Current reset tick colour",
+            description = "The colour of the reset tick when active",
+            section = resetSettings
+    )
+    @Alpha
+    default Color getCurrentResetTickColour()
+    {
+        return Color.GREEN;
+    }
+
+    @ConfigItem(
+            position = 4,
+            keyName = "resetTickColour",
+            name = "Reset tick colour",
+            description = "The colour of the reset tick when not active",
+            section = resetSettings
+    )
+    @Alpha
+    default Color getResetTickColour()
+    {
+        return Color.decode("#0D430D");
     }
 }

@@ -1,5 +1,6 @@
 package com.visualticks;
 
+import com.visualticks.utils.ResetUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayPosition;
@@ -17,6 +18,9 @@ public class VisualTicksOverlay extends Overlay
     VisualTicksConfig config;
 
     @Inject
+    ResetUtils resetUtils;
+
+    @Inject
     public VisualTicksOverlay()
     {
         setPosition(OverlayPosition.ABOVE_CHATBOX_RIGHT);
@@ -30,8 +34,9 @@ public class VisualTicksOverlay extends Overlay
         {
             int x = position * config.sizeOfTickShapes() + position * config.tickPadding();
             int y = row * config.sizeOfTickShapes() + row * config.tickPadding();
-            graphics.setColor(plugin.tick == tick ? config.currentTickColour() : config.tickColour());
 
+            graphics.setColor(plugin.tick == tick ? config.currentTickColour() : config.tickColour());
+            setTickColor(graphics, tick);
             setTickShape(graphics, x, y);
 
             position++;
@@ -63,4 +68,38 @@ public class VisualTicksOverlay extends Overlay
                 break;
         }
     }
+
+    private void setTickColor(Graphics2D graphics, int tick) {
+        if (plugin.tick == tick) {
+            graphics.setColor(setCurrentColor(tick));
+        } else if (config.isResetCounter() && isPrayerOnTick(tick)) {
+            graphics.setColor(config.getResetTickColour());
+        } else {
+            graphics.setColor(config.tickColour());
+        }
+    }
+
+    private Color setCurrentColor(int tick) {
+        if (!config.isResetCounter()) {
+            return config.currentTickColour();
+        }
+        if (isPrayerOnTick(tick)) {
+            return config.getCurrentResetTickColour();
+        } else {
+            return config.currentTickColour();
+        }
+    }
+
+    private boolean isPrayerOnTick(int tick) {
+        return (tick == ResetUtils.calculateOffset(config.getOffset(), config.numberOfTicks()));
+    }
+/*
+    private int calculateOffset() {
+        if (config.getOffset() < config.numberOfTicks()){
+            return config.getOffset();
+        }
+        return config.getOffset()% config.numberOfTicks();
+    }*/
+
+
 }
