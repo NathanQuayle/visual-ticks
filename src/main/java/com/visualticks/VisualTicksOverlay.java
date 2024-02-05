@@ -32,7 +32,7 @@ public class VisualTicksOverlay extends Overlay
             int y = row * config.sizeOfTickShapes() + row * config.tickPadding();
             graphics.setColor(plugin.tick == tick ? config.currentTickColour() : config.tickColour());
 
-            graphics.fillOval(x, y, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+            setTickShape(graphics, x, y);
 
             position++;
             if(position > config.amountPerRow() - 1) {
@@ -48,5 +48,19 @@ public class VisualTicksOverlay extends Overlay
         int width = (ticksRenderedPerRow - 1) * config.tickPadding() + ticksRenderedPerRow * config.sizeOfTickShapes();
 
         return new Dimension(width, height);
+    }
+
+    private void setTickShape(Graphics2D graphics, int xPosition, int yPosition) {
+        switch (config.getTickShape()) {
+            case CIRCLE:
+                graphics.fillOval(xPosition, yPosition, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+                break;
+            case ROUNDED_SQUARE:
+                graphics.fillRoundRect(xPosition, yPosition ,config.sizeOfTickShapes() , config.sizeOfTickShapes(), config.getTickArc(), config.getTickArc());
+                break;
+            default:
+                graphics.fillRect(xPosition, yPosition, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+                break;
+        }
     }
 }

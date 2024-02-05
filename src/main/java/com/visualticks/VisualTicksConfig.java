@@ -1,5 +1,6 @@
 package com.visualticks;
 
+import com.visualticks.config.TickShape;
 import net.runelite.client.config.*;
 
 import java.awt.*;
@@ -8,12 +9,24 @@ import java.awt.*;
 public interface VisualTicksConfig extends Config
 {
     String GROUP_NAME = "visualticks";
+    String GENERAL_SETTINGS = "General-settings";
+    String ALTERNATIVE_SETTINGS = "Alternative-settings";
+
+    // General settings
+    @ConfigSection(
+            position = 0,
+            name = "General",
+            description = "General settings"
+
+    )
+    String generalSettings = GENERAL_SETTINGS;
 
     @ConfigItem(
             position = 0,
             keyName = "numberOfTicks",
             name = "Number of ticks",
-            description = "Number of tick circles to display"
+            description = "Number of tick circles to display",
+            section = generalSettings
     )
     @Range(min = 2, max = 30)
     default int numberOfTicks()
@@ -25,7 +38,8 @@ public interface VisualTicksConfig extends Config
             position = 1,
             keyName = "tickColour",
             name = "Tick colour",
-            description = "The colour of the ticks"
+            description = "The colour of the ticks",
+            section = generalSettings
     )
     @Alpha
     default Color tickColour()
@@ -37,7 +51,8 @@ public interface VisualTicksConfig extends Config
             position = 2,
             keyName = "currentTickColour",
             name = "Current tick colour",
-            description = "The colour of the current tick"
+            description = "The colour of the current tick",
+            section = generalSettings
     )
     @Alpha
     default Color currentTickColour()
@@ -49,7 +64,8 @@ public interface VisualTicksConfig extends Config
 			position = 3,
 			keyName = "amountPerRow",
 			name = "Amount per row",
-			description = "How many ticks to display per row"
+			description = "How many ticks to display per row",
+            section = generalSettings
 	)
 	default int amountPerRow()
 	{
@@ -57,10 +73,11 @@ public interface VisualTicksConfig extends Config
 	}
 
     @ConfigItem(
-            position = 3,
+            position = 4,
             keyName = "sizeOfTickShapes",
             name = "Size of ticks",
-            description = "How many pixels to make the tick shapes"
+            description = "How many pixels to make the tick shapes",
+            section = generalSettings
     )
     default int sizeOfTickShapes()
     {
@@ -71,10 +88,35 @@ public interface VisualTicksConfig extends Config
             position = 5,
             keyName = "paddingBetweenTicks",
             name = "Padding between ticks",
-            description = "The amount of space between ticks"
+            description = "The amount of space between ticks",
+            section = generalSettings
     )
     default int tickPadding()
     {
         return 5;
+    }
+
+
+    @ConfigItem(
+            position = 6,
+            keyName = "arcOnTicks",
+            name = "Arc",
+            description = "Arc (if using Rounded Square)",
+            section = generalSettings
+    )
+    default int getTickArc() {
+        return 5;
+    }
+
+    @ConfigItem(
+            position =7,
+            keyName = "tickShape",
+            name = "Shape of the tick",
+            description = "The shape of the visual ticks",
+            section = generalSettings
+    )
+    default TickShape getTickShape()
+    {
+        return TickShape.CIRCLE;
     }
 }
