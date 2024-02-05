@@ -112,7 +112,7 @@ public interface VisualTicksConfig extends Config
     @ConfigItem(
             position =7,
             keyName = "tickShape",
-            name = "Shape of the tick",
+            name = "Shape",
             description = "The shape of the visual ticks",
             section = generalSettings
     )
