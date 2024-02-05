@@ -18,9 +18,6 @@ public class VisualTicksOverlay extends Overlay
     VisualTicksConfig config;
 
     @Inject
-    ResetUtils resetUtils;
-
-    @Inject
     public VisualTicksOverlay()
     {
         setPosition(OverlayPosition.ABOVE_CHATBOX_RIGHT);
@@ -35,7 +32,6 @@ public class VisualTicksOverlay extends Overlay
             int x = position * config.sizeOfTickShapes() + position * config.tickPadding();
             int y = row * config.sizeOfTickShapes() + row * config.tickPadding();
 
-            graphics.setColor(plugin.tick == tick ? config.currentTickColour() : config.tickColour());
             setTickColor(graphics, tick);
             setTickShape(graphics, x, y);
 
@@ -93,13 +89,4 @@ public class VisualTicksOverlay extends Overlay
     private boolean isPrayerOnTick(int tick) {
         return (tick == ResetUtils.calculateOffset(config.getOffset(), config.numberOfTicks()));
     }
-/*
-    private int calculateOffset() {
-        if (config.getOffset() < config.numberOfTicks()){
-            return config.getOffset();
-        }
-        return config.getOffset()% config.numberOfTicks();
-    }*/
-
-
 }

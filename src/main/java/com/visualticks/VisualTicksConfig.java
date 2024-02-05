@@ -143,12 +143,12 @@ public interface VisualTicksConfig extends Config
 
     @ConfigItem(
             position = 1,
-            keyName = "offset",
-            name = "Offset",
+            keyName = "startTick",
+            name = "Start on tick",
             description = "Which tick to start on after the reset.",
             section = resetSettings
     )
-    @Range(min = 0, max = 30)
+    @Range(max = 30)
     default int getOffset() {
         return 0;
     }
