@@ -1,5 +1,6 @@
 package com.visualticks;
 
+import com.visualticks.utils.ResetUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayPosition;
@@ -30,9 +31,9 @@ public class VisualTicksOverlay extends Overlay
         {
             int x = position * config.sizeOfTickShapes() + position * config.tickPadding();
             int y = row * config.sizeOfTickShapes() + row * config.tickPadding();
-            graphics.setColor(plugin.tick == tick ? config.currentTickColour() : config.tickColour());
 
-            graphics.fillOval(x, y, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+            setTickColor(graphics, tick);
+            setTickShape(graphics, x, y);
 
             position++;
             if(position > config.amountPerRow() - 1) {
@@ -48,5 +49,44 @@ public class VisualTicksOverlay extends Overlay
         int width = (ticksRenderedPerRow - 1) * config.tickPadding() + ticksRenderedPerRow * config.sizeOfTickShapes();
 
         return new Dimension(width, height);
+    }
+
+    private void setTickShape(Graphics2D graphics, int xPosition, int yPosition) {
+        switch (config.getTickShape()) {
+            case SQUARE:
+                graphics.fillRect(xPosition, yPosition, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+                break;
+            case ROUNDED_SQUARE:
+                graphics.fillRoundRect(xPosition, yPosition ,config.sizeOfTickShapes() , config.sizeOfTickShapes(), config.getTickArc(), config.getTickArc());
+                break;
+            default:
+                graphics.fillOval(xPosition, yPosition, config.sizeOfTickShapes(), config.sizeOfTickShapes());
+                break;
+        }
+    }
+
+    private void setTickColor(Graphics2D graphics, int tick) {
+        if (plugin.tick == tick) {
+            graphics.setColor(setCurrentColor(tick));
+        } else if (config.isResetCounter() && isResetTick(tick)) {
+            graphics.setColor(config.getResetTickColour());
+        } else {
+            graphics.setColor(config.tickColour());
+        }
+    }
+
+    private Color setCurrentColor(int tick) {
+        if (!config.isResetCounter()) {
+            return config.currentTickColour();
+        }
+        if (isResetTick(tick)) {
+            return config.getCurrentResetTickColour();
+        } else {
+            return config.currentTickColour();
+        }
+    }
+
+    private boolean isResetTick(int tick) {
+        return (tick == ResetUtils.calculateOffset(config.getOffset(), config.numberOfTicks()));
     }
 }
