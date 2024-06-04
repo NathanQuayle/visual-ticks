@@ -88,18 +88,26 @@ public class VisualTicksOverlay extends Overlay
             if (i == plugin.tick)
             {
                 graphics.setColor(config.currentTickColour());
+                graphics.fillOval(tick.getShapeX(), tick.getShapeY(), config.sizeOfTickShapes(), config.sizeOfTickShapes());
+
+                if(config.shouldShowText()) {
+                    graphics.setColor(config.currentTickTextColour());
+                    graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
+                }
             }
             else
             {
                 graphics.setColor(config.tickColour());
+                graphics.fillOval(tick.getShapeX(), tick.getShapeY(), config.sizeOfTickShapes(), config.sizeOfTickShapes());
+
+                if(config.shouldShowText()) {
+                    graphics.setColor(config.tickTextColour());
+                    graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
+                }
             }
-            graphics.fillOval(tick.getShapeX(), tick.getShapeY(), config.sizeOfTickShapes(), config.sizeOfTickShapes());
-            if(config.shouldShowText()) {
-                // set font size to match config
-                graphics.setColor(config.textColour());
-                graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
-            }
+
         }
-        return dimension;
+
+        return new Dimension(dimension.width, dimension.height + 5);
     }
 }
