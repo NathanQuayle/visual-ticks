@@ -81,7 +81,7 @@ public class VisualTicksOverlay extends Overlay
         }
 
         if(ticks.size() < config.numberOfTicks() - 1) return null;
-        // draw each tick
+
         for (int i = 0; i < config.numberOfTicks(); i++)
         {
             Tick tick = ticks.get(i);
