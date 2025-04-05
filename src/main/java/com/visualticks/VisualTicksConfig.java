@@ -9,11 +9,31 @@ import java.awt.event.KeyEvent;
 public interface VisualTicksConfig extends Config {
     String GROUP_NAME = "visualticks";
 
+    //region Hotkey Settings
+    @ConfigSection(
+            name = "Hotkey settings",
+            description = "Settings for hotkeys",
+            position = 0
+    )
+    String hotkeySettings = "hotkeySettings";
+
+    @ConfigItem(
+            position = 0,
+            keyName = "tickResetHotkey",
+            name = "Tick Reset Hotkey",
+            description = "Hotkey to reset tick counter",
+            section = hotkeySettings
+    )
+    default Keybind tickResetHotkey() {
+        return new Keybind(KeyEvent.VK_BACK_QUOTE, KeyEvent.VK_UNDEFINED);
+    }
+    //endregion
+
     //region Tick settings - One
     @ConfigSection(
             name = "Tick settings - One",
             description = "Settings for the first set of ticks",
-            position = 0
+            position = 1
     )
     String tickSettings = "tickSettings";
 
@@ -172,7 +192,7 @@ public interface VisualTicksConfig extends Config {
     @ConfigSection(
             name = "Tick settings - Two",
             description = "Settings for the second set of ticks",
-            position = 1
+            position = 2
     )
     String tickSettingsTwo = "tickSettingsTwo";
 
@@ -331,7 +351,7 @@ public interface VisualTicksConfig extends Config {
     @ConfigSection(
             name = "Tick settings - Three",
             description = "Settings for the third set of ticks",
-            position = 2
+            position = 3
     )
     String tickSettingsThree = "tickSettingsThree";
 
@@ -483,26 +503,6 @@ public interface VisualTicksConfig extends Config {
     @Range(min = 0, max = 100)
     default int tickArcThree() {
         return 10;
-    }
-    //endregion
-
-    //region Hotkey Settings
-    @ConfigSection(
-            name = "Hotkey settings",
-            description = "Settings for hotkeys",
-            position = 3
-    )
-    String hotkeySettings = "hotkeySettings";
-
-    @ConfigItem(
-            position = 0,
-            keyName = "tickResetHotkey",
-            name = "Tick Reset Hotkey",
-            description = "Hotkey to reset tick counter",
-            section = hotkeySettings
-    )
-    default Keybind tickResetHotkey() {
-        return new Keybind(KeyEvent.VK_BACK_QUOTE, KeyEvent.VK_UNDEFINED);
     }
     //endregion
 }

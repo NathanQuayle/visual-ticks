@@ -4,8 +4,6 @@ import com.visualticks.config.InterfaceTab;
 import com.visualticks.config.TickShape;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
-import net.runelite.client.ui.overlay.OverlayPosition;
-
 import javax.inject.Inject;
 import java.awt.*;
 
@@ -15,10 +13,7 @@ public class VisualTicksOverlayThree extends BaseVisualTicksOverlay
     @Inject
     public VisualTicksOverlayThree(VisualTicksPlugin plugin, VisualTicksConfig config, Client client)
     {
-        this.plugin = plugin;
-        this.config = config;
-        this.client = client;
-        setPosition(OverlayPosition.ABOVE_CHATBOX_RIGHT);
+        super(plugin, config, client);
     }
 
     @Override

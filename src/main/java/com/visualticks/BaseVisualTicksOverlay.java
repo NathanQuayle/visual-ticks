@@ -1,11 +1,14 @@
 package com.visualticks;
 
+import com.google.inject.Inject;
 import com.visualticks.config.InterfaceTab;
 import com.visualticks.config.Tick;
 import com.visualticks.config.TickShape;
 import net.runelite.api.Client;
 import net.runelite.api.VarClientInt;
 import net.runelite.client.ui.overlay.Overlay;
+import net.runelite.client.ui.overlay.OverlayPosition;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +18,18 @@ public abstract class BaseVisualTicksOverlay extends Overlay
     protected VisualTicksPlugin plugin;
     protected VisualTicksConfig config;
     protected Client client;
-
     protected boolean configChanged = true;
-
-    // arraylist of x and y values for each tick
     protected final List<Tick> ticks = new ArrayList<>();
-
-    // track dimension values
     protected final Dimension dimension = new Dimension();
+
+    @Inject
+    public BaseVisualTicksOverlay(VisualTicksPlugin plugin, VisualTicksConfig config, Client client)
+    {
+        this.plugin = plugin;
+        this.config = config;
+        this.client = client;
+        setPosition(OverlayPosition.ABOVE_CHATBOX_RIGHT);
+    }
 
     public void onConfigChanged() {
         configChanged = true;
@@ -114,4 +121,3 @@ public abstract class BaseVisualTicksOverlay extends Overlay
         return new Dimension(dimension.width, dimension.height);
     }
 }
-

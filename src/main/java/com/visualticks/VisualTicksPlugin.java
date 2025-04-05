@@ -1,9 +1,7 @@
 package com.visualticks;
 
 import com.google.inject.Provides;
-
 import javax.inject.Inject;
-
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.config.ConfigManager;
@@ -58,18 +56,15 @@ public class VisualTicksPlugin extends Plugin implements KeyListener {
         }
 
         if(config.isEnabledOne()) {
-            tickOne++;
-            if (tickOne > config.numberOfTicksOne() - 1) tickOne = 0;
+            tickOne = (tickOne + 1) % config.numberOfTicksOne();
         }
 
         if(config.isEnabledTwo()) {
-            tickTwo++;
-            if (tickTwo > config.numberOfTicksTwo() - 1) tickTwo = 0;
+            tickTwo = (tickTwo + 1) % config.numberOfTicksTwo();
         }
 
         if(config.isEnabledThree()) {
-            tickThree++;
-            if (tickThree > config.numberOfTicksThree() - 1) tickThree = 0;
+            tickThree = (tickThree + 1) % config.numberOfTicksThree();
         }
     }
 
