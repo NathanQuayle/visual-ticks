@@ -6,6 +6,6 @@ You can have up to 3 different tick configurations at once.
 
 ![Multiple configurations](./readme/many-configs.gif)
 
-Tabs can be toggled to only show whilst on specific tabs.
+Configurations can be toggled to only show whilst on a specific tab.
 
 ![Tab specific](./readme/tab-only-mode.gif)
