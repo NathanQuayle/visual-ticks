@@ -1,7 +1,8 @@
 package com.visualticks;
 
+import net.runelite.api.Client;
+import net.runelite.api.VarClientInt;
 import net.runelite.client.ui.overlay.Overlay;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ public abstract class BaseVisualTicksOverlay extends Overlay
 {
     protected VisualTicksPlugin plugin;
     protected VisualTicksConfig config;
+    protected Client client;
 
     protected boolean configChanged = true;
 
@@ -31,7 +33,9 @@ public abstract class BaseVisualTicksOverlay extends Overlay
     protected abstract int getSizeOfTickShapes();
     protected abstract int getTickPadding();
     protected abstract int getCurrentTick();
-    // Removed isEnabled method
+    protected abstract InterfaceTab getExclusiveTab();
+    protected abstract Color getTickTextColour();
+    protected abstract Color getCurrentTickTextColour();
 
     protected void calculateSizes(Graphics2D g) {
         configChanged = false;
@@ -76,6 +80,7 @@ public abstract class BaseVisualTicksOverlay extends Overlay
             calculateSizes(graphics);
         }
 
+        if(getExclusiveTab().getIndex() != -1 && client.getVarcIntValue(VarClientInt.INVENTORY_TAB) != getExclusiveTab().getIndex()) return null;
         if(ticks.size() < getNumberOfTicks() - 1) return null;
 
         for (int i = 0; i < getNumberOfTicks(); i++)
@@ -87,7 +92,7 @@ public abstract class BaseVisualTicksOverlay extends Overlay
                 graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
 
                 if(shouldShowText()) {
-                    graphics.setColor(config.currentTickTextColour());
+                    graphics.setColor(getCurrentTickTextColour());
                     graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
                 }
             }
@@ -97,7 +102,7 @@ public abstract class BaseVisualTicksOverlay extends Overlay
                 graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
 
                 if(shouldShowText()) {
-                    graphics.setColor(config.tickTextColour());
+                    graphics.setColor(getTickTextColour());
                     graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
                 }
             }
@@ -106,3 +111,4 @@ public abstract class BaseVisualTicksOverlay extends Overlay
         return new Dimension(dimension.width, dimension.height + 5);
     }
 }
+

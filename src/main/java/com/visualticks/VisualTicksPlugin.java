@@ -78,6 +78,7 @@ public class VisualTicksPlugin extends Plugin implements KeyListener {
         if (!event.getGroup().equals(VisualTicksConfig.GROUP_NAME)) {
             return;
         }
+
         updateOverlays();
     }
 

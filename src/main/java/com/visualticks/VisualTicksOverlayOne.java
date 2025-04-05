@@ -1,6 +1,7 @@
 package com.visualticks;
 
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Client;
 import net.runelite.client.ui.overlay.OverlayPosition;
 
 import javax.inject.Inject;
@@ -10,10 +11,11 @@ import java.awt.*;
 public class VisualTicksOverlayOne extends BaseVisualTicksOverlay
 {
     @Inject
-    public VisualTicksOverlayOne(VisualTicksPlugin plugin, VisualTicksConfig config)
+    public VisualTicksOverlayOne(VisualTicksPlugin plugin, VisualTicksConfig config, Client client)
     {
         this.plugin = plugin;
         this.config = config;
+        this.client = client;
         setPosition(OverlayPosition.ABOVE_CHATBOX_RIGHT);
     }
 
@@ -29,31 +31,46 @@ public class VisualTicksOverlayOne extends BaseVisualTicksOverlay
 
     @Override
     protected Color getTickColour() {
-        return config.tickColour();
+        return config.tickColourOne();
     }
 
     @Override
     protected Color getCurrentTickColour() {
-        return config.currentTickColour();
+        return config.currentTickColourOne();
     }
 
     @Override
     protected int getAmountPerRow() {
-        return config.amountPerRow();
+        return config.amountPerRowOne();
     }
 
     @Override
     protected int getSizeOfTickShapes() {
-        return config.sizeOfTickShapes();
+        return config.sizeOfTickShapesOne();
     }
 
     @Override
     protected int getTickPadding() {
-        return config.tickPadding();
+        return config.tickPaddingOne();
     }
 
     @Override
     protected int getCurrentTick() {
         return plugin.tickOne;
+    }
+
+    @Override
+    protected InterfaceTab getExclusiveTab() {
+        return config.exclusiveTabOne();
+    }
+
+    @Override
+    protected Color getTickTextColour() {
+        return config.tickTextColourOne();
+    }
+
+    @Override
+    protected Color getCurrentTickTextColour() {
+        return config.currentTickTextColourOne();
     }
 }

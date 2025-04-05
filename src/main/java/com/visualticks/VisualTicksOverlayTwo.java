@@ -1,6 +1,7 @@
 package com.visualticks;
 
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Client;
 import net.runelite.client.ui.overlay.OverlayPosition;
 
 import javax.inject.Inject;
@@ -10,10 +11,11 @@ import java.awt.*;
 public class VisualTicksOverlayTwo extends BaseVisualTicksOverlay
 {
     @Inject
-    public VisualTicksOverlayTwo(VisualTicksPlugin plugin, VisualTicksConfig config)
+    public VisualTicksOverlayTwo(VisualTicksPlugin plugin, VisualTicksConfig config, Client client)
     {
         this.plugin = plugin;
         this.config = config;
+        this.client = client;
         setPosition(OverlayPosition.ABOVE_CHATBOX_RIGHT);
     }
 
@@ -53,7 +55,22 @@ public class VisualTicksOverlayTwo extends BaseVisualTicksOverlay
     }
 
     @Override
+    protected Color getTickTextColour() {
+        return config.tickTextColourTwo();
+    }
+
+    @Override
+    protected Color getCurrentTickTextColour() {
+        return config.currentTickTextColourTwo();
+    }
+
+    @Override
     protected int getCurrentTick() {
         return plugin.tickTwo;
+    }
+
+    @Override
+    protected InterfaceTab getExclusiveTab() {
+        return config.exclusiveTabTwo();
     }
 }
