@@ -1,5 +1,7 @@
 package com.visualticks;
 
+import com.visualticks.config.InterfaceTab;
+import com.visualticks.config.TickShape;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.client.ui.overlay.OverlayPosition;
@@ -72,5 +74,15 @@ public class VisualTicksOverlayThree extends BaseVisualTicksOverlay
     @Override
     protected InterfaceTab getExclusiveTab() {
         return config.exclusiveTabThree();
+    }
+
+    @Override
+    protected TickShape getTickShape() {
+        return config.tickShapeThree();
+    }
+
+    @Override
+    protected int getTickArc() {
+        return config.tickArcThree();
     }
 }

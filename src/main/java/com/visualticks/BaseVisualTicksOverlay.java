@@ -1,5 +1,8 @@
 package com.visualticks;
 
+import com.visualticks.config.InterfaceTab;
+import com.visualticks.config.Tick;
+import com.visualticks.config.TickShape;
 import net.runelite.api.Client;
 import net.runelite.api.VarClientInt;
 import net.runelite.client.ui.overlay.Overlay;
@@ -36,6 +39,8 @@ public abstract class BaseVisualTicksOverlay extends Overlay
     protected abstract InterfaceTab getExclusiveTab();
     protected abstract Color getTickTextColour();
     protected abstract Color getCurrentTickTextColour();
+    protected abstract TickShape getTickShape();
+    protected abstract int getTickArc();
 
     protected void calculateSizes(Graphics2D g) {
         configChanged = false;
@@ -86,25 +91,23 @@ public abstract class BaseVisualTicksOverlay extends Overlay
         for (int i = 0; i < getNumberOfTicks(); i++)
         {
             Tick tick = ticks.get(i);
-            if (i == getCurrentTick())
-            {
-                graphics.setColor(getCurrentTickColour());
-                graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
-
-                if(shouldShowText()) {
-                    graphics.setColor(getCurrentTickTextColour());
-                    graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
-                }
+            graphics.setColor(i == getCurrentTick() ? getCurrentTickColour() : getTickColour());
+            switch(getTickShape()) {
+                case SQUARE:
+                    graphics.fillRect(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
+                    break;
+                case CIRCLE:
+                    graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
+                    break;
+                case ROUNDED_SQUARE:
+                    graphics.fillRoundRect(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes(), getTickArc(), getTickArc());
+                    break;
             }
-            else
-            {
-                graphics.setColor(getTickColour());
-                graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
+            graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
 
-                if(shouldShowText()) {
-                    graphics.setColor(getTickTextColour());
-                    graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
-                }
+            if (shouldShowText()) {
+                graphics.setColor(i == getCurrentTick() ? getCurrentTickTextColour() : getTickTextColour());
+                graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
             }
         }
 

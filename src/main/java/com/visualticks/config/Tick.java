@@ -1,4 +1,4 @@
-package com.visualticks;
+package com.visualticks.config;
 
 import lombok.Getter;
 

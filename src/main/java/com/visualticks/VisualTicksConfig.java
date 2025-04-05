@@ -1,4 +1,6 @@
 package com.visualticks;
+import com.visualticks.config.InterfaceTab;
+import com.visualticks.config.TickShape;
 import net.runelite.client.config.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -141,6 +143,29 @@ public interface VisualTicksConfig extends Config {
     default int tickPaddingOne() {
         return 5;
     }
+
+    @ConfigItem(
+            keyName = "tickShapeOne",
+            name = "Tick shape",
+            description = "The shape of the ticks",
+            section = tickSettings,
+            position = 11
+    )
+    default TickShape tickShapeOne() {
+        return TickShape.CIRCLE;
+    }
+
+    @ConfigItem(
+            keyName = "tickArcOne",
+            name = "Tick arc(rounded square)",
+            description = "The arc of the corners of the rounded square tick shape",
+            section = tickSettings,
+            position = 12
+    )
+    @Range(min = 0, max = 100)
+    default int tickArcOne() {
+        return 10;
+    }
     //endregion
 
     //region Tick settings - Two
@@ -277,6 +302,29 @@ public interface VisualTicksConfig extends Config {
     default int tickPaddingTwo() {
         return 5;
     }
+
+    @ConfigItem(
+            keyName = "tickShapeTwo",
+            name = "Tick shape",
+            description = "The shape of the ticks",
+            section = tickSettingsTwo,
+            position = 11
+    )
+    default TickShape tickShapeTwo() {
+        return TickShape.CIRCLE;
+    }
+
+    @ConfigItem(
+            keyName = "tickArcTwo",
+            name = "Tick arc(rounded square)",
+            description = "The arc of the corners of the rounded square tick shape",
+            section = tickSettingsTwo,
+            position = 12
+    )
+    @Range(min = 0, max = 100)
+    default int tickArcTwo() {
+        return 10;
+    }
     //endregion
 
     //region Tick settings - Three
@@ -412,6 +460,29 @@ public interface VisualTicksConfig extends Config {
     )
     default int tickPaddingThree() {
         return 5;
+    }
+
+    @ConfigItem(
+            keyName = "tickShapeThree",
+            name = "Tick shape",
+            description = "The shape of the ticks",
+            section = tickSettingsThree,
+            position = 11
+    )
+    default TickShape tickShapeThree() {
+        return TickShape.CIRCLE;
+    }
+
+    @ConfigItem(
+            keyName = "tickArcThree",
+            name = "Tick arc(rounded square)",
+            description = "The arc of the corners of the rounded square tick shape",
+            section = tickSettingsThree,
+            position = 12
+    )
+    @Range(min = 0, max = 100)
+    default int tickArcThree() {
+        return 10;
     }
     //endregion
 
