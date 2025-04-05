@@ -111,7 +111,7 @@ public abstract class BaseVisualTicksOverlay extends Overlay
             }
         }
 
-        return new Dimension(dimension.width, dimension.height + 5);
+        return new Dimension(dimension.width, dimension.height);
     }
 }
 
