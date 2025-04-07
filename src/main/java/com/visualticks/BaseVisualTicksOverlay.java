@@ -36,12 +36,15 @@ public abstract class BaseVisualTicksOverlay extends Overlay
     }
 
     protected abstract boolean shouldShowText();
+    protected abstract boolean shouldShowTickShape();
+    protected abstract int getTickTextSize();
     protected abstract int getNumberOfTicks();
     protected abstract Color getTickColour();
     protected abstract Color getCurrentTickColour();
     protected abstract int getAmountPerRow();
     protected abstract int getSizeOfTickShapes();
-    protected abstract int getTickPadding();
+    protected abstract int getHorizontalSpacing();
+    protected abstract int getVerticalSpacing();
     protected abstract int getCurrentTick();
     protected abstract InterfaceTab getExclusiveTab();
     protected abstract Color getTickTextColour();
@@ -53,36 +56,51 @@ public abstract class BaseVisualTicksOverlay extends Overlay
         configChanged = false;
         ticks.clear();
 
-        for (int tick = 0, position = 0, row = 0; tick < getNumberOfTicks(); tick++)
+        int totalTicks = getNumberOfTicks();
+        int perRow = getAmountPerRow();
+        int shapeSize = getSizeOfTickShapes();
+        Font originalFont = g.getFont();
+        g.setFont(g.getFont().deriveFont((float) getTickTextSize()));
+        FontMetrics fm = g.getFontMetrics();
+
+        int maxBoundingSize = 0;
+        int maxCol = 0;
+        int maxRow = 0;
+
+        for (int i = 0; i < totalTicks; i++)
         {
-            int x = position * (getSizeOfTickShapes() + getTickPadding());
-            int y = row * (getSizeOfTickShapes() + getTickPadding());
+            int boundingSize = shouldShowTickShape() ? shapeSize : 0;
 
-            position++;
-            if(shouldShowText()) {
-                FontMetrics fm = g.getFontMetrics();
+            String text = String.valueOf(i + 1);
+            int textWidth = fm.stringWidth(text);
+            int textHeight = fm.getAscent();
 
-                int textWidth = fm.stringWidth(String.valueOf(tick + 1));
-                int textHeight = fm.getHeight();
-
-                int fontX = x + (getSizeOfTickShapes() / 2) - (textWidth / 2);
-                int fontY = y + (getSizeOfTickShapes() / 2) + (textHeight / 2);
-
-                ticks.add(new Tick(x, y, fontX, fontY));
-            } else {
-                ticks.add(new Tick(x, y, 0, 0));
+            if (shouldShowText()) {
+                boundingSize = Math.max(boundingSize, textWidth);
+                boundingSize = Math.max(boundingSize, textHeight);
             }
-            if(position > getAmountPerRow() - 1) {
-                position = 0;
-                row++;
+
+            int row = i / perRow;
+            int col = i % perRow;
+            int x = col * (boundingSize + getHorizontalSpacing());
+            int y = row * (boundingSize + getVerticalSpacing());
+
+            Tick tick = new Tick(x, y);
+
+            if (shouldShowText()) {
+                tick.setFontX(x + (boundingSize - textWidth) / 2);
+                tick.setFontY(y + (boundingSize + textHeight) / 2);
             }
+            ticks.add(tick);
+
+            maxBoundingSize = Math.max(maxBoundingSize, boundingSize);
+            maxRow = Math.max(maxRow, row);
+            maxCol = Math.max(maxCol, col);
         }
 
-        int rowsRendered = (int) Math.ceil((double) getNumberOfTicks() / (double) getAmountPerRow());
-        dimension.height = (rowsRendered - 1) * getTickPadding() + rowsRendered * getSizeOfTickShapes();
-
-        int ticksRenderedPerRow = Math.min(getAmountPerRow(), getNumberOfTicks());
-        dimension.width = (ticksRenderedPerRow - 1) * getTickPadding() + ticksRenderedPerRow * getSizeOfTickShapes();
+        dimension.width = (maxCol + 1) * (maxBoundingSize + getHorizontalSpacing()) - getHorizontalSpacing();
+        dimension.height = (maxRow + 1) * (maxBoundingSize + getVerticalSpacing()) - getVerticalSpacing();
+        g.setFont(originalFont);
     }
 
     @Override
@@ -95,29 +113,33 @@ public abstract class BaseVisualTicksOverlay extends Overlay
         if(getExclusiveTab().getIndex() != -1 && client.getVarcIntValue(VarClientInt.INVENTORY_TAB) != getExclusiveTab().getIndex()) return null;
         if(ticks.size() < getNumberOfTicks() - 1) return null;
 
+        Font originalFont = graphics.getFont();
+        graphics.setFont(graphics.getFont().deriveFont((float) getTickTextSize()));
+
         for (int i = 0; i < getNumberOfTicks(); i++)
         {
             Tick tick = ticks.get(i);
-            graphics.setColor(i == getCurrentTick() ? getCurrentTickColour() : getTickColour());
-            switch(getTickShape()) {
-                case SQUARE:
-                    graphics.fillRect(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
-                    break;
-                case CIRCLE:
-                    graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
-                    break;
-                case ROUNDED_SQUARE:
-                    graphics.fillRoundRect(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes(), getTickArc(), getTickArc());
-                    break;
+            if (shouldShowTickShape()) {
+                graphics.setColor(i == getCurrentTick() ? getCurrentTickColour() : getTickColour());
+                switch(getTickShape()) {
+                    case SQUARE:
+                        graphics.fillRect(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
+                        break;
+                    case CIRCLE:
+                        graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
+                        break;
+                    case ROUNDED_SQUARE:
+                        graphics.fillRoundRect(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes(), getTickArc(), getTickArc());
+                        break;
+                }
             }
-            graphics.fillOval(tick.getShapeX(), tick.getShapeY(), getSizeOfTickShapes(), getSizeOfTickShapes());
-
             if (shouldShowText()) {
                 graphics.setColor(i == getCurrentTick() ? getCurrentTickTextColour() : getTickTextColour());
                 graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
             }
         }
 
+        graphics.setFont(originalFont);
         return new Dimension(dimension.width, dimension.height);
     }
 }

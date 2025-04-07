@@ -7,6 +7,7 @@ import net.runelite.api.events.GameTick;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
+import net.runelite.client.events.ProfileChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
@@ -16,7 +17,7 @@ import java.awt.event.KeyEvent;
 
 @Slf4j
 @PluginDescriptor(
-        name = "Visual Ticks"
+    name = "Visual Ticks"
 )
 public class VisualTicksPlugin extends Plugin implements KeyListener {
     @Inject
@@ -31,6 +32,8 @@ public class VisualTicksPlugin extends Plugin implements KeyListener {
     private VisualTicksOverlayThree overlayThree;
     @Inject
     private KeyManager keyManager;
+    @Inject
+    private ConfigManager configManager;
     public int tickOne = 0;
     public int tickTwo = 0;
     public int tickThree = 0;
@@ -39,6 +42,7 @@ public class VisualTicksPlugin extends Plugin implements KeyListener {
     protected void startUp() throws Exception {
         updateOverlays();
         keyManager.registerKeyListener(this);
+        migrate();
     }
 
     @Override
@@ -97,6 +101,11 @@ public class VisualTicksPlugin extends Plugin implements KeyListener {
         overlayThree.onConfigChanged();
     }
 
+    @Subscribe
+    public void onProfileChanged(ProfileChanged profileChanged) {
+        migrate();
+    }
+
     @Provides
     VisualTicksConfig provideConfig(ConfigManager configManager) {
         return configManager.getConfig(VisualTicksConfig.class);
@@ -117,6 +126,28 @@ public class VisualTicksPlugin extends Plugin implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         // No implementation needed
+    }
+
+    private void migrate() {
+        String[][] migrationMap = {
+                {"paddingBetweenTicksOne", "horizontalSpacingOne,verticalSpacingOne"},
+                {"tickPaddingTwo", "horizontalSpacingTwo,verticalSpacingTwo"},
+                {"tickPaddingThree", "horizontalSpacingThree,verticalSpacingThree"}
+        };
+
+        for (String[] migration : migrationMap) {
+            String oldKey = migration[0];
+            String[] newKeys = migration[1].split(",");
+
+            for (String newKey : newKeys) {
+                if (configManager.getConfiguration(VisualTicksConfig.GROUP_NAME, oldKey) != null) {
+                    String value = configManager.getConfiguration(VisualTicksConfig.GROUP_NAME, oldKey);
+                    configManager.setConfiguration(VisualTicksConfig.GROUP_NAME, newKey, value);
+                }
+            }
+
+            configManager.unsetConfiguration(VisualTicksConfig.GROUP_NAME, oldKey);
+        }
     }
 
     private void resetTicks() {

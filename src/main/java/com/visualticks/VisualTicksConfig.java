@@ -49,11 +49,33 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "shouldShowTickShapeOne",
+            name = "Show Tick Shape",
+            description = "Show the shape of the first set of ticks",
+            section = tickSettings,
+            position = 1
+    )
+    default boolean shouldShowTickShapeOne() {
+        return true;
+    }
+
+    @ConfigItem(
+            keyName = "tickShapeOne",
+            name = "Tick shape",
+            description = "The shape of the ticks",
+            section = tickSettings,
+            position = 2
+    )
+    default TickShape tickShapeOne() {
+        return TickShape.CIRCLE;
+    }
+
+    @ConfigItem(
             keyName = "exclusiveTabOne",
             name = "Only show if on tab",
             description = "Show the ticks only when the selected tab is active",
             section = tickSettings,
-            position = 1
+            position = 3
     )
     default InterfaceTab exclusiveTabOne() {
         return InterfaceTab.ALL;
@@ -64,7 +86,7 @@ public interface VisualTicksConfig extends Config {
             name = "Number of ticks",
             description = "Number of tick circles to display",
             section = tickSettings,
-            position = 2
+            position = 4
     )
     @Range(min = 2, max = 30)
     default int numberOfTicksOne() {
@@ -72,11 +94,23 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "amountPerRowOne",
+            name = "Amount per row",
+            description = "How many ticks to display per row",
+            section = tickSettings,
+            position = 5
+    )
+    @Range(min = 1)
+    default int amountPerRowOne() {
+        return 8;
+    }
+
+    @ConfigItem(
             keyName = "tickColourOne",
             name = "Tick colour",
             description = "The colour of the ticks",
             section = tickSettings,
-            position = 3
+            position = 6
     )
     @Alpha
     default Color tickColourOne() {
@@ -88,7 +122,7 @@ public interface VisualTicksConfig extends Config {
             name = "Current tick colour",
             description = "The colour of the current tick",
             section = tickSettings,
-            position = 4
+            position = 7
     )
     @Alpha
     default Color currentTickColourOne() {
@@ -96,14 +130,49 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "sizeOfTickShapesOne",
+            name = "Size of ticks",
+            description = "How many pixels to make the tick shapes",
+            section = tickSettings,
+            position = 8
+    )
+    default int sizeOfTickShapesOne() {
+        return 32;
+    }
+
+    @ConfigItem(
+            keyName = "tickArcOne",
+            name = "Tick arc(rounded square)",
+            description = "The arc of the corners of the rounded square tick shape",
+            section = tickSettings,
+            position = 9
+    )
+    @Range(max = 100)
+    default int tickArcOne() {
+        return 10;
+    }
+
+    @ConfigItem(
             keyName = "shouldShowTextOne",
             name = "Show text",
             description = "Show the text of the current tick",
             section = tickSettings,
-            position = 5
+            position = 10
     )
     default boolean shouldShowTextOne() {
         return true;
+    }
+
+    @ConfigItem(
+            keyName = "tickTextSizeOne",
+            name = "Tick text size",
+            description = "The size of the text on the ticks",
+            section = tickSettings,
+            position = 11
+    )
+    @Range(min = 1, max = 100)
+    default int tickTextSizeOne() {
+        return 15;
     }
 
     @ConfigItem(
@@ -111,7 +180,7 @@ public interface VisualTicksConfig extends Config {
             name = "Tick text colour",
             description = "The colour of the text non-current ticks",
             section = tickSettings,
-            position = 6
+            position = 12
     )
     @Alpha
     default Color tickTextColourOne() {
@@ -123,7 +192,7 @@ public interface VisualTicksConfig extends Config {
             name = "Current tick text colour",
             description = "The colour of the text on the current tick",
             section = tickSettings,
-            position = 7
+            position = 13
     )
     @Alpha
     default Color currentTickTextColourOne() {
@@ -131,60 +200,27 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
-            keyName = "amountPerRowOne",
-            name = "Amount per row",
-            description = "How many ticks to display per row",
+            keyName = "horizontalSpacingOne",
+            name = "Horizontal spacing",
+            description = "The amount of space between ticks on the x-axis",
             section = tickSettings,
-            position = 8
+            position = 14
     )
-    @Range(min = 1)
-    default int amountPerRowOne() {
-        return 8;
-    }
-
-    @ConfigItem(
-            keyName = "sizeOfTickShapesOne",
-            name = "Size of ticks",
-            description = "How many pixels to make the tick shapes",
-            section = tickSettings,
-            position = 9
-    )
-    default int sizeOfTickShapesOne() {
-        return 32;
-    }
-
-    @ConfigItem(
-            keyName = "paddingBetweenTicksOne",
-            name = "Padding between ticks",
-            description = "The amount of space between ticks",
-            section = tickSettings,
-            position = 10
-    )
-    default int tickPaddingOne() {
+    @Range(min = -50)
+    default int horizontalSpacingOne() {
         return 5;
     }
 
     @ConfigItem(
-            keyName = "tickShapeOne",
-            name = "Tick shape",
-            description = "The shape of the ticks",
+            keyName = "verticalSpacingOne",
+            name = "Vertical spacing",
+            description = "The amount of space between ticks on the y-axis",
             section = tickSettings,
-            position = 11
+            position = 15
     )
-    default TickShape tickShapeOne() {
-        return TickShape.CIRCLE;
-    }
-
-    @ConfigItem(
-            keyName = "tickArcOne",
-            name = "Tick arc(rounded square)",
-            description = "The arc of the corners of the rounded square tick shape",
-            section = tickSettings,
-            position = 12
-    )
-    @Range(min = 0, max = 100)
-    default int tickArcOne() {
-        return 10;
+    @Range(min = -50)
+    default int verticalSpacingOne() {
+        return 5;
     }
     //endregion
 
@@ -208,11 +244,33 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "shouldShowTickShapeTwo",
+            name = "Show Tick Shape",
+            description = "Show the shape of the second set of ticks",
+            section = tickSettingsTwo,
+            position = 1
+    )
+    default boolean shouldShowTickShapeTwo() {
+        return true;
+    }
+
+    @ConfigItem(
+            keyName = "tickShapeTwo",
+            name = "Tick shape",
+            description = "The shape of the ticks",
+            section = tickSettingsTwo,
+            position = 2
+    )
+    default TickShape tickShapeTwo() {
+        return TickShape.CIRCLE;
+    }
+
+    @ConfigItem(
             keyName = "exclusiveTabTwo",
             name = "Only show if on tab",
             description = "Show the ticks only when the selected tab is active",
             section = tickSettingsTwo,
-            position = 1
+            position = 3
     )
     default InterfaceTab exclusiveTabTwo() {
         return InterfaceTab.ALL;
@@ -223,7 +281,7 @@ public interface VisualTicksConfig extends Config {
             name = "Number of ticks",
             description = "Number of tick circles to display",
             section = tickSettingsTwo,
-            position = 2
+            position = 4
     )
     @Range(min = 2, max = 30)
     default int numberOfTicksTwo() {
@@ -231,11 +289,23 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "amountPerRowTwo",
+            name = "Amount per row",
+            description = "How many ticks to display per row",
+            section = tickSettingsTwo,
+            position = 5
+    )
+    @Range(min = 1)
+    default int amountPerRowTwo() {
+        return 8;
+    }
+
+    @ConfigItem(
             keyName = "tickColourTwo",
             name = "Tick colour",
             description = "The colour of the ticks",
             section = tickSettingsTwo,
-            position = 3
+            position = 6
     )
     @Alpha
     default Color tickColourTwo() {
@@ -247,7 +317,7 @@ public interface VisualTicksConfig extends Config {
             name = "Current tick colour",
             description = "The colour of the current tick",
             section = tickSettingsTwo,
-            position = 4
+            position = 7
     )
     @Alpha
     default Color currentTickColourTwo() {
@@ -255,14 +325,49 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "sizeOfTickShapesTwo",
+            name = "Size of ticks",
+            description = "How many pixels to make the tick shapes",
+            section = tickSettingsTwo,
+            position = 8
+    )
+    default int sizeOfTickShapesTwo() {
+        return 32;
+    }
+
+    @ConfigItem(
+            keyName = "tickArcTwo",
+            name = "Tick arc(rounded square)",
+            description = "The arc of the corners of the rounded square tick shape",
+            section = tickSettingsTwo,
+            position = 9
+    )
+    @Range(max = 100)
+    default int tickArcTwo() {
+        return 10;
+    }
+
+    @ConfigItem(
             keyName = "shouldShowTextTwo",
             name = "Show text",
             description = "Show the text of the current tick",
             section = tickSettingsTwo,
-            position = 5
+            position = 10
     )
     default boolean shouldShowTextTwo() {
         return true;
+    }
+
+    @ConfigItem(
+            keyName = "tickTextSizeTwo",
+            name = "Tick text size",
+            description = "The size of the text on the ticks",
+            section = tickSettingsTwo,
+            position = 11
+    )
+    @Range(min = 1, max = 100)
+    default int tickTextSizeTwo() {
+        return 15;
     }
 
     @ConfigItem(
@@ -270,7 +375,7 @@ public interface VisualTicksConfig extends Config {
             name = "Tick text colour",
             description = "The colour of the text non-current ticks",
             section = tickSettingsTwo,
-            position = 6
+            position = 12
     )
     @Alpha
     default Color tickTextColourTwo() {
@@ -282,7 +387,7 @@ public interface VisualTicksConfig extends Config {
             name = "Current tick text colour",
             description = "The colour of the text on the current tick",
             section = tickSettingsTwo,
-            position = 7
+            position = 13
     )
     @Alpha
     default Color currentTickTextColourTwo() {
@@ -290,60 +395,27 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
-            keyName = "amountPerRowTwo",
-            name = "Amount per row",
-            description = "How many ticks to display per row",
+            keyName = "horizontalSpacingTwo",
+            name = "Horizontal spacing",
+            description = "The amount of space between ticks on the x-axis",
             section = tickSettingsTwo,
-            position = 8
+            position = 14
     )
-    @Range(min = 1)
-    default int amountPerRowTwo() {
-        return 8;
-    }
-
-    @ConfigItem(
-            keyName = "sizeOfTickShapesTwo",
-            name = "Size of ticks",
-            description = "How many pixels to make the tick shapes",
-            section = tickSettingsTwo,
-            position = 9
-    )
-    default int sizeOfTickShapesTwo() {
-        return 32;
-    }
-
-    @ConfigItem(
-            keyName = "tickPaddingTwo",
-            name = "Padding between ticks",
-            description = "The amount of space between ticks",
-            section = tickSettingsTwo,
-            position = 10
-    )
-    default int tickPaddingTwo() {
+    @Range(min = -50)
+    default int horizontalSpacingTwo() {
         return 5;
     }
 
     @ConfigItem(
-            keyName = "tickShapeTwo",
-            name = "Tick shape",
-            description = "The shape of the ticks",
+            keyName = "verticalSpacingTwo",
+            name = "Vertical spacing",
+            description = "The amount of space between ticks on the y-axis",
             section = tickSettingsTwo,
-            position = 11
+            position = 15
     )
-    default TickShape tickShapeTwo() {
-        return TickShape.CIRCLE;
-    }
-
-    @ConfigItem(
-            keyName = "tickArcTwo",
-            name = "Tick arc(rounded square)",
-            description = "The arc of the corners of the rounded square tick shape",
-            section = tickSettingsTwo,
-            position = 12
-    )
-    @Range(min = 0, max = 100)
-    default int tickArcTwo() {
-        return 10;
+    @Range(min = -50)
+    default int verticalSpacingTwo() {
+        return 5;
     }
     //endregion
 
@@ -367,11 +439,33 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "shouldShowTickShapeThree",
+            name = "Show Tick Shape",
+            description = "Show the shape of the third set of ticks",
+            section = tickSettingsThree,
+            position = 1
+    )
+    default boolean shouldShowTickShapeThree() {
+        return true;
+    }
+
+    @ConfigItem(
+            keyName = "tickShapeThree",
+            name = "Tick shape",
+            description = "The shape of the ticks",
+            section = tickSettingsThree,
+            position = 2
+    )
+    default TickShape tickShapeThree() {
+        return TickShape.CIRCLE;
+    }
+
+    @ConfigItem(
             keyName = "exclusiveTabThree",
             name = "Only show if on tab",
             description = "Show the ticks only when the selected tab is active",
             section = tickSettingsThree,
-            position = 1
+            position = 3
     )
     default InterfaceTab exclusiveTabThree() {
         return InterfaceTab.ALL;
@@ -382,7 +476,7 @@ public interface VisualTicksConfig extends Config {
             name = "Number of ticks",
             description = "Number of tick circles to display",
             section = tickSettingsThree,
-            position = 2
+            position = 4
     )
     @Range(min = 2, max = 30)
     default int numberOfTicksThree() {
@@ -390,11 +484,23 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "amountPerRowThree",
+            name = "Amount per row",
+            description = "How many ticks to display per row",
+            section = tickSettingsThree,
+            position = 5
+    )
+    @Range(min = 1)
+    default int amountPerRowThree() {
+        return 8;
+    }
+
+    @ConfigItem(
             keyName = "tickColourThree",
             name = "Tick colour",
             description = "The colour of the ticks",
             section = tickSettingsThree,
-            position = 3
+            position = 6
     )
     @Alpha
     default Color tickColourThree() {
@@ -406,7 +512,7 @@ public interface VisualTicksConfig extends Config {
             name = "Current tick colour",
             description = "The colour of the current tick",
             section = tickSettingsThree,
-            position = 4
+            position = 7
     )
     @Alpha
     default Color currentTickColourThree() {
@@ -414,14 +520,49 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "sizeOfTickShapesThree",
+            name = "Size of ticks",
+            description = "How many pixels to make the tick shapes",
+            section = tickSettingsThree,
+            position = 8
+    )
+    default int sizeOfTickShapesThree() {
+        return 32;
+    }
+
+    @ConfigItem(
+            keyName = "tickArcThree",
+            name = "Tick arc(rounded square)",
+            description = "The arc of the corners of the rounded square tick shape",
+            section = tickSettingsThree,
+            position = 9
+    )
+    @Range(max = 100)
+    default int tickArcThree() {
+        return 10;
+    }
+
+    @ConfigItem(
             keyName = "shouldShowTextThree",
             name = "Show text",
             description = "Show the text of the current tick",
             section = tickSettingsThree,
-            position = 5
+            position = 10
     )
     default boolean shouldShowTextThree() {
         return true;
+    }
+
+    @ConfigItem(
+            keyName = "tickTextSizeThree",
+            name = "Tick text size",
+            description = "The size of the text on the ticks",
+            section = tickSettingsThree,
+            position = 11
+    )
+    @Range(min = 1, max = 100)
+    default int tickTextSizeThree() {
+        return 15;
     }
 
     @ConfigItem(
@@ -429,7 +570,7 @@ public interface VisualTicksConfig extends Config {
             name = "Tick text colour",
             description = "The colour of the text non-current ticks",
             section = tickSettingsThree,
-            position = 6
+            position = 12
     )
     @Alpha
     default Color tickTextColourThree() {
@@ -441,7 +582,7 @@ public interface VisualTicksConfig extends Config {
             name = "Current tick text colour",
             description = "The colour of the text on the current tick",
             section = tickSettingsThree,
-            position = 7
+            position = 13
     )
     @Alpha
     default Color currentTickTextColourThree() {
@@ -449,60 +590,27 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
-            keyName = "amountPerRowThree",
-            name = "Amount per row",
-            description = "How many ticks to display per row",
+            keyName = "horizontalSpacingThree",
+            name = "Horizontal spacing",
+            description = "The amount of space between ticks on the x-axis",
             section = tickSettingsThree,
-            position = 8
+            position = 14
     )
-    @Range(min = 1)
-    default int amountPerRowThree() {
-        return 8;
-    }
-
-    @ConfigItem(
-            keyName = "sizeOfTickShapesThree",
-            name = "Size of ticks",
-            description = "How many pixels to make the tick shapes",
-            section = tickSettingsThree,
-            position = 9
-    )
-    default int sizeOfTickShapesThree() {
-        return 32;
-    }
-
-    @ConfigItem(
-            keyName = "tickPaddingThree",
-            name = "Padding between ticks",
-            description = "The amount of space between ticks",
-            section = tickSettingsThree,
-            position = 10
-    )
-    default int tickPaddingThree() {
+    @Range(min = -50)
+    default int horizontalSpacingThree() {
         return 5;
     }
 
     @ConfigItem(
-            keyName = "tickShapeThree",
-            name = "Tick shape",
-            description = "The shape of the ticks",
+            keyName = "verticalSpacingThree",
+            name = "Vertical spacing",
+            description = "The amount of space between ticks on the y-axis",
             section = tickSettingsThree,
-            position = 11
+            position = 15
     )
-    default TickShape tickShapeThree() {
-        return TickShape.CIRCLE;
-    }
-
-    @ConfigItem(
-            keyName = "tickArcThree",
-            name = "Tick arc(rounded square)",
-            description = "The arc of the corners of the rounded square tick shape",
-            section = tickSettingsThree,
-            position = 12
-    )
-    @Range(min = 0, max = 100)
-    default int tickArcThree() {
-        return 10;
+    @Range(min = -50)
+    default int verticalSpacingThree() {
+        return 5;
     }
     //endregion
 }

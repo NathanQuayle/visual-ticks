@@ -1,18 +1,18 @@
 package com.visualticks.config;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Tick {
-    private final int shapeX;
-    private final int shapeY;
-    private final int fontX;
-    private final int fontY;
+    private int shapeX;
+    private int shapeY;
+    private int fontX;
+    private int fontY;
 
-    public Tick(int shapeX, int shapeY, int fontX, int fontY) {
+    public Tick(int shapeX, int shapeY) {
         this.shapeX = shapeX;
         this.shapeY = shapeY;
-        this.fontX = fontX;
-        this.fontY = fontY;
     }
 }

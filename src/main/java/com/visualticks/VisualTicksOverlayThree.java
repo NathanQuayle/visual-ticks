@@ -22,6 +22,16 @@ public class VisualTicksOverlayThree extends BaseVisualTicksOverlay
     }
 
     @Override
+    protected boolean shouldShowTickShape() {
+        return config.shouldShowTickShapeThree();
+    }
+
+    @Override
+    protected int getTickTextSize() {
+        return config.tickTextSizeThree();
+    }
+
+    @Override
     protected int getNumberOfTicks() {
         return config.numberOfTicksThree();
     }
@@ -47,8 +57,13 @@ public class VisualTicksOverlayThree extends BaseVisualTicksOverlay
     }
 
     @Override
-    protected int getTickPadding() {
-        return config.tickPaddingThree();
+    protected int getHorizontalSpacing() {
+        return config.horizontalSpacingThree();
+    }
+
+    @Override
+    protected int getVerticalSpacing() {
+        return config.verticalSpacingThree();
     }
 
     @Override

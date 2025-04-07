@@ -22,6 +22,16 @@ public class VisualTicksOverlayTwo extends BaseVisualTicksOverlay
     }
 
     @Override
+    protected boolean shouldShowTickShape() {
+        return config.shouldShowTickShapeTwo();
+    }
+
+    @Override
+    protected int getTickTextSize() {
+        return config.tickTextSizeTwo();
+    }
+
+    @Override
     protected int getNumberOfTicks() {
         return config.numberOfTicksTwo();
     }
@@ -47,8 +57,13 @@ public class VisualTicksOverlayTwo extends BaseVisualTicksOverlay
     }
 
     @Override
-    protected int getTickPadding() {
-        return config.tickPaddingTwo();
+    protected int getHorizontalSpacing() {
+        return config.horizontalSpacingTwo();
+    }
+
+    @Override
+    protected int getVerticalSpacing() {
+        return config.verticalSpacingTwo();
     }
 
     @Override
