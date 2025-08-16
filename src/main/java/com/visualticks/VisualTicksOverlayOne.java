@@ -95,4 +95,10 @@ public class VisualTicksOverlayOne extends BaseVisualTicksOverlay
     protected int getTickArc() {
         return config.tickArcOne();
     }
+
+    @Override
+    protected boolean shouldShowCustomText() { return config.shouldShowCustomTextOne(); }
+
+    @Override
+    protected String getCustomTickText() { return config.customTextOne(); }
 }

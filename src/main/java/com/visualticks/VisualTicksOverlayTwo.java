@@ -95,4 +95,10 @@ public class VisualTicksOverlayTwo extends BaseVisualTicksOverlay
     protected int getTickArc() {
         return config.tickArcTwo();
     }
+
+    @Override
+    protected boolean shouldShowCustomText() { return config.shouldShowCustomTextTwo(); }
+
+    @Override
+    protected String getCustomTickText() { return config.customTextTwo(); }
 }

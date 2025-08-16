@@ -95,4 +95,10 @@ public class VisualTicksOverlayThree extends BaseVisualTicksOverlay
     protected int getTickArc() {
         return config.tickArcThree();
     }
+
+    @Override
+    protected boolean shouldShowCustomText() { return config.shouldShowCustomTextThree(); }
+
+    @Override
+    protected String getCustomTickText() { return config.customTextThree(); }
 }

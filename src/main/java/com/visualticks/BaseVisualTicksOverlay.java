@@ -11,6 +11,7 @@ import net.runelite.client.ui.overlay.OverlayPosition;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class BaseVisualTicksOverlay extends Overlay
@@ -51,6 +52,25 @@ public abstract class BaseVisualTicksOverlay extends Overlay
     protected abstract Color getCurrentTickTextColour();
     protected abstract TickShape getTickShape();
     protected abstract int getTickArc();
+    protected abstract boolean shouldShowCustomText();
+    protected abstract String getCustomTickText();
+
+    protected String[] customTickText;
+
+    protected String getTickText(int tickIndex){
+        String tickText = String.valueOf(tickIndex + 1);
+        if (shouldShowCustomText()){
+            if (customTickText.length > tickIndex){
+                tickText = customTickText[tickIndex];
+            }
+        }
+        return tickText;
+    }
+
+    protected void calculateCustomTickText() {
+        configChanged = false;
+        customTickText = Arrays.stream(getCustomTickText().split(",")).map(String::trim).toArray(String[]::new);
+    }
 
     protected void calculateSizes(Graphics2D g) {
         configChanged = false;
@@ -71,7 +91,7 @@ public abstract class BaseVisualTicksOverlay extends Overlay
         {
             int boundingSize = shouldShowTickShape() ? shapeSize : 0;
 
-            String text = String.valueOf(i + 1);
+            String text = getTickText(i);
             int textWidth = fm.stringWidth(text);
             int textHeight = fm.getAscent();
 
@@ -107,6 +127,7 @@ public abstract class BaseVisualTicksOverlay extends Overlay
     public Dimension render(Graphics2D graphics)
     {
         if(configChanged) {
+            calculateCustomTickText();
             calculateSizes(graphics);
         }
 
@@ -135,7 +156,7 @@ public abstract class BaseVisualTicksOverlay extends Overlay
             }
             if (shouldShowText()) {
                 graphics.setColor(i == getCurrentTick() ? getCurrentTickTextColour() : getTickTextColour());
-                graphics.drawString(String.valueOf(i + 1), tick.getFontX(), tick.getFontY());
+                graphics.drawString(getTickText(i), tick.getFontX(), tick.getFontY());
             }
         }
 

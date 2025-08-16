@@ -200,11 +200,29 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "shouldShowCustomTextOne",
+            name = "Show custom text",
+            description = "Show custom text of the current tick",
+            section = tickSettings,
+            position = 14
+    )
+    default boolean shouldShowCustomTextOne() { return false; }
+
+    @ConfigItem(
+            keyName = "customTextOne",
+            name = "Custom text",
+            description = "Custom text to show on each tick, separated by commas",
+            section = tickSettings,
+            position = 15
+    )
+    default String customTextOne() { return "1,2,3"; }
+
+    @ConfigItem(
             keyName = "horizontalSpacingOne",
             name = "Horizontal spacing",
             description = "The amount of space between ticks on the x-axis",
             section = tickSettings,
-            position = 14
+            position = 16
     )
     @Range(min = -50)
     default int horizontalSpacingOne() {
@@ -216,7 +234,7 @@ public interface VisualTicksConfig extends Config {
             name = "Vertical spacing",
             description = "The amount of space between ticks on the y-axis",
             section = tickSettings,
-            position = 15
+            position = 17
     )
     @Range(min = -50)
     default int verticalSpacingOne() {
@@ -395,11 +413,29 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "shouldShowCustomTextTwo",
+            name = "Show custom text",
+            description = "Show custom text of the current tick",
+            section = tickSettingsTwo,
+            position = 14
+    )
+    default boolean shouldShowCustomTextTwo() { return false; }
+
+    @ConfigItem(
+            keyName = "customTextTwo",
+            name = "Custom text",
+            description = "Custom text to show on each tick, separated by commas",
+            section = tickSettingsTwo,
+            position = 15
+    )
+    default String customTextTwo() { return "1,2,3"; }
+
+    @ConfigItem(
             keyName = "horizontalSpacingTwo",
             name = "Horizontal spacing",
             description = "The amount of space between ticks on the x-axis",
             section = tickSettingsTwo,
-            position = 14
+            position = 16
     )
     @Range(min = -50)
     default int horizontalSpacingTwo() {
@@ -411,7 +447,7 @@ public interface VisualTicksConfig extends Config {
             name = "Vertical spacing",
             description = "The amount of space between ticks on the y-axis",
             section = tickSettingsTwo,
-            position = 15
+            position = 17
     )
     @Range(min = -50)
     default int verticalSpacingTwo() {
@@ -590,11 +626,29 @@ public interface VisualTicksConfig extends Config {
     }
 
     @ConfigItem(
+            keyName = "shouldShowCustomTextThree",
+            name = "Show custom text",
+            description = "Show custom text of the current tick",
+            section = tickSettingsThree,
+            position = 14
+    )
+    default boolean shouldShowCustomTextThree() { return false; }
+
+    @ConfigItem(
+            keyName = "customTextThree",
+            name = "Custom text",
+            description = "Custom text to show on each tick, separated by commas",
+            section = tickSettingsThree,
+            position = 15
+    )
+    default String customTextThree() { return "1,2,3"; }
+
+    @ConfigItem(
             keyName = "horizontalSpacingThree",
             name = "Horizontal spacing",
             description = "The amount of space between ticks on the x-axis",
             section = tickSettingsThree,
-            position = 14
+            position = 16
     )
     @Range(min = -50)
     default int horizontalSpacingThree() {
@@ -606,7 +660,7 @@ public interface VisualTicksConfig extends Config {
             name = "Vertical spacing",
             description = "The amount of space between ticks on the y-axis",
             section = tickSettingsThree,
-            position = 15
+            position = 17
     )
     @Range(min = -50)
     default int verticalSpacingThree() {
